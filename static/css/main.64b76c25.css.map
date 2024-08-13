@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.64b76c25.css","mappings":"AAAA,EAEE,qBAAsB,CADtB,QAEF,CAEA,KACE,YAAa,CACb,gCACF","sources":["App.css"],"sourcesContent":["*{\n  margin: 0;\n  box-sizing: border-box;\n}\n\n.App{\n  display: grid;\n  grid-template-columns: 280px auto;\n}"],"names":[],"sourceRoot":""}
