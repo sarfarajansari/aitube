@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { apiClient } from "../../apiClient/apiClient";
 
 import { useState } from "react";
@@ -6,7 +6,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import ReactPlayer from "react-player";
 import { AppLodingContainer, sidebarContext } from "../sidebar/Sidebar";
-import { Image, Spin } from "antd";
+import { Image, message, Spin } from "antd";
 import styled from "styled-components";
 import visualizerThumbnail from "./visualizer.jpg";
 import axios from "axios";
@@ -76,6 +76,27 @@ const Container = styled.div`
   min-height: calc(100vh - 48px);
 `;
 
+const LoadButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+`;
+const AddButton = styled.div`
+  width: 400px;
+  height: 200px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+  background-color: #ede5af;
+  cursor: pointer;
+  border-radius: 8px;
+  display: grid;
+  place-content: center;
+  font-size: 30px;
+  font-family: sans-serif;
+  user-select: none;
+`;
+
 const formatTime = (seconds) => {
   const minutes = Math.floor(parseFloat(seconds) / 60);
   const remainingSeconds = parseFloat(seconds) % 60;
@@ -83,6 +104,7 @@ const formatTime = (seconds) => {
   const formattedSeconds = String(parseInt(remainingSeconds)).padStart(2, "0");
   return ` ${formattedMinutes}:${formattedSeconds} `;
 };
+
 const Learn = () => {
   const { topic, videoId } = useParams();
   const [video, setVideo] = useState(null);
@@ -93,11 +115,12 @@ const Learn = () => {
 
   const [loadingConcepts, setLoadingConcepts] = useState(false);
 
-  const fetchConcept = async (description, concept, cancelToken, c = 0) => {
+  const fetchConcept = async (description, concept, c = 0) => {
     try {
       const conceptData = await apiClient
-        .get(`/htmlcontent/${description}`, {
-          cancelToken: cancelToken,
+        .post(`/generatehtmlcontent`, {
+          topic: description,
+          videoId: videoId,
         })
         .then((res) => res.data);
       if (!conceptData) return null;
@@ -113,55 +136,75 @@ const Learn = () => {
       console.log(e);
       await new Promise((resolve) => setTimeout(resolve, 2000));
       if (c < 3) {
-        return fetchConcept(description, concept, cancelToken, c + 1);
+        return fetchConcept(description, concept, c + 1);
       }
       return setLoadingConcepts(false);
     }
   };
+
+  const unLoadedConcepts = useMemo(() => {
+    if (!video) return [];
+    return video.concept.filter(
+      (concept) =>
+        !concepts.find((c) => c["topic"] === concept["concept description"])
+    );
+  }, [concepts, video]);
+
+  const handleLoadInteractiveItem = async () => {
+    if (unLoadedConcepts.length === 0 || loadingConcepts) return;
+
+    setLoadingConcepts(true);
+    message.info("Loading Interactive Item - This may take a while, please wait...");
+    const concept = unLoadedConcepts[0];
+    let description =
+      concept["concept description"] ||
+      concept["description"] ||
+      concept["concept"] ||
+      "";
+
+    description = description.trim();
+    description = description.replaceAll("/", "-");
+
+    if (!description) return null;
+
+    await fetchConcept(description, concept);
+
+    setLoadingConcepts(false);
+  };
   useEffect(() => {
-    const source = axios.CancelToken.source();
-    apiClient
-      .get(`/video/${videoId}`, {
-        cancelToken: source.token,
-      })
-      .then(async (res) => {
+    try {
+      apiClient.get(`/video/${videoId}`, {}).then(async (res) => {
         setHeader(topic);
         setVideo(res.data);
 
-        const video = res.data;
-        const conceptList = video?.concept || video?.concepts || [];
-
-        setConcepts([]);
+        const conceptList = res.data?.concept || [];
         setLoadingConcepts(true);
 
         try {
-          await Promise.all(
-            conceptList.map(async (concept) => {
-              let description =
-                concept["concept description"] ||
-                concept["description"] ||
-                concept["concept"] ||
-                "";
+          apiClient.get(`/htmlcontent/${videoId}`, {}).then(async (res) => {
+            const data = res.data || [];
+            const modified = data.map((concept) => {
+              const existingConcept = conceptList.find(
+                (i) => i["concept description"] === concept.topic
+              );
+              if (!existingConcept) return concept;
+              return {
+                ...existingConcept,
+                ...concept,
+              };
+            });
 
-              description = description.trim();
-              description = description.replaceAll("/", "-");
-
-              if (!description) return null;
-
-              await fetchConcept(description, concept, source.token);
-            })
-          );
+            setConcepts([...modified]);
+            setLoadingConcepts(false);
+          });
         } catch (err) {
           console.log(err);
+          setLoadingConcepts(false);
         }
-        setLoadingConcepts(false);
-
-        return () => {
-          source.cancel();
-        };
       });
-  }, []);
-  // error handling for destructuring of the objects
+    } catch (err) {}
+  }, [videoId]);
+
   if (!video?.title)
     return (
       <AppLodingContainer
@@ -228,7 +271,6 @@ const Learn = () => {
       <div>
         <div className="concept-box">
           <Typography variant="h5">
-            {" "}
             {loadingConcepts ? "Building " : ""}Interactive Playground
           </Typography>
           {loadingConcepts ? (
@@ -266,6 +308,13 @@ const Learn = () => {
               </div>
             </div>
           ))}
+          <div>
+            {unLoadedConcepts.length > 0 && !loadingConcepts && (
+              <AddButton onClick={handleLoadInteractiveItem}>
+                Generate Interactive Item
+              </AddButton>
+            )}
+          </div>
         </div>
       </div>
     </Container>

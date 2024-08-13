@@ -9,8 +9,7 @@ import styled from "styled-components";
 const Container = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-around;
+  gap: 20px 40px;
   padding: 20px;
 
   a {
@@ -20,6 +19,22 @@ const Container = styled.div`
   background-color: #e0e5b680;
   min-height: calc(100vh - 48px);
 `;
+
+const AddButton = styled.div`
+  width: 320px;
+  height: 276px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+  background-color: #ede5af;
+  cursor: pointer;
+  border-radius: 8px;
+  display: grid;
+  place-content: center;
+  font-size: 30px;
+  font-family: sans-serif;
+  user-select: none;
+`;
 const TopicView = () => {
   const { topic, subject } = useParams();
   const [videos, setVideos] = React.useState([]);
@@ -27,25 +42,44 @@ const TopicView = () => {
   const { setHeader } = React.useContext(sidebarContext);
 
   const [loading, setLoading] = React.useState(true);
+  const [generatingVideo, setGeneratingVideo] = React.useState(false);
 
-  const fetchVideos = async (c = 0) => {
+  const generateVideos = async (c = 0) => {
     try {
-      setLoading(true);
-      await apiClient.get(`videos/${topic}`).then((res) => {
-        setVideos(res.data.videos);
-        setLoading(false);
-      });
+
+      if (generatingVideo) {
+        return;
+      }
+      setGeneratingVideo(true);
+      apiClient
+        .post(`generatevideo`, {
+          subject: topic,
+        })
+        .then((res) => {
+          const videos = res.data?.videos || [];
+          setVideos((prev) => [...prev, ...videos]);
+          setGeneratingVideo(false);
+        });
     } catch (err) {
-      setLoading(false);
+      setGeneratingVideo(false);
       console.log(err);
       await new Promise((resolve) => setTimeout(resolve, 2000));
       if (c < 3) {
-        return fetchVideos(c + 1);
+        return generateVideos(c + 1);
       }
     }
   };
   useEffect(() => {
-    fetchVideos();
+    setLoading(true);
+    apiClient
+      .get(`videos/${topic}`)
+      .then((res) => {
+        setVideos(res.data.videos);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
     setHeader(topic);
   }, [topic]);
   if (loading) {
@@ -69,6 +103,17 @@ const TopicView = () => {
           />
         );
       })}
+      <AddButton onClick={generateVideos}>
+        {generatingVideo ? (
+          <>
+            Generating... <Spin size="small" />
+          </>
+        ) : videos.length === 0 ? (
+          "Load a video"
+        ) : (
+          "Load Another Video"
+        )}
+      </AddButton>
     </Container>
   );
 };

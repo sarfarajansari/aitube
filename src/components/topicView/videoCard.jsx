@@ -13,6 +13,8 @@ const VideoCard = ({ videoId, thumbnail, topic, subject, title }) => {
         },
         boxShadow: "none",
         borderRadius: "8px",
+         height: "max-content"
+
       }}
     >
       <Link to={`/${subject}/${topic}/${videoId}`}>
@@ -29,7 +31,7 @@ const VideoCard = ({ videoId, thumbnail, topic, subject, title }) => {
           image={thumbnail}
         />
       </Link>
-      <CardContent sx={{ backgroundColor: "#fefae0", height: "100%" }}>
+      <CardContent sx={{ backgroundColor: "#fefae0", }}>
         <Link to={`/${subject}/${topic}/${videoId}`}>
           <Typography variant="subtitle1" fontWeight="bold" color="black">
             {title}
