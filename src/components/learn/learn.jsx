@@ -162,9 +162,6 @@ const Learn = () => {
       concept["concept"] ||
       "";
 
-    description = description.trim();
-    description = description.replaceAll("/", "-");
-
     if (!description) return null;
 
     await fetchConcept(description, concept);

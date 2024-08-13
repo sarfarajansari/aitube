@@ -96,7 +96,7 @@ export const sidebarContext = React.createContext({
   activeSubject: "Maths",
   setActiveSubject: () => {},
   menus: [],
-  header: "AI Tube",
+  header: "EDU Tube",
   setHeader: () => {},
 });
 export const useSidebar = () => React.useContext(sidebarContext);

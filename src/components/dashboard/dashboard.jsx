@@ -14,7 +14,7 @@ const Container = styled.div`
 const Dashboard = () => {
   const { setHeader } = React.useContext(sidebarContext);
   React.useEffect(() => {
-    setHeader("AI Tube");
+    setHeader("EDU Tube");
   }, []);
   return (
     <div>

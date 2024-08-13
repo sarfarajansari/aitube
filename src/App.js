@@ -9,7 +9,7 @@ import Learn from "./components/learn/learn";
 function App() {
   const [activeMenu, setActiveMenu] = React.useState("");
   const [activeSubject, setActiveSubject] = React.useState(null);
-  const [header, setHeader] = React.useState("AI Tube");
+  const [header, setHeader] = React.useState("EDU Tube");
 
   useEffect(() => {
     const activeSubject = localStorage.getItem("activeSubject");
