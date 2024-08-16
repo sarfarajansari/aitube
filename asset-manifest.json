@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/edutube/static/css/main.64b76c25.css",
-    "main.js": "/edutube/static/js/main.98d1837a.js",
+    "main.js": "/edutube/static/js/main.a4816681.js",
     "reactPlayerYouTube.js": "/edutube/static/js/reactPlayerYouTube.0327d785.chunk.js",
     "reactPlayerSoundCloud.js": "/edutube/static/js/reactPlayerSoundCloud.2178b556.chunk.js",
     "reactPlayerVimeo.js": "/edutube/static/js/reactPlayerVimeo.e48d7e82.chunk.js",
@@ -20,7 +20,7 @@
     "static/media/visualizer.jpg": "/edutube/static/media/visualizer.0a368d2457287ce33c93.jpg",
     "index.html": "/edutube/index.html",
     "main.64b76c25.css.map": "/edutube/static/css/main.64b76c25.css.map",
-    "main.98d1837a.js.map": "/edutube/static/js/main.98d1837a.js.map",
+    "main.a4816681.js.map": "/edutube/static/js/main.a4816681.js.map",
     "reactPlayerYouTube.0327d785.chunk.js.map": "/edutube/static/js/reactPlayerYouTube.0327d785.chunk.js.map",
     "reactPlayerSoundCloud.2178b556.chunk.js.map": "/edutube/static/js/reactPlayerSoundCloud.2178b556.chunk.js.map",
     "reactPlayerVimeo.e48d7e82.chunk.js.map": "/edutube/static/js/reactPlayerVimeo.e48d7e82.chunk.js.map",
@@ -39,6 +39,6 @@
   },
   "entrypoints": [
     "static/css/main.64b76c25.css",
-    "static/js/main.98d1837a.js"
+    "static/js/main.a4816681.js"
   ]
 }
