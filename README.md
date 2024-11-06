@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# Edutube 🎓📺
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Edutube** is an innovative educational platform designed to make learning more interactive and accessible through YouTube videos. It provides a structured way to learn subjects, topics, and concepts, transforming passive video watching into an engaging, hands-on experience. With Edutube, users can dive deeper into educational content, get critical insights, and interact with concepts in real time.
 
-## Available Scripts
 
-In the project directory, you can run:
+https://github.com/user-attachments/assets/cdbd1afa-cc41-4427-b102-98396bede21c
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 1. **Structured Learning Path**
+   - Start with a **list of subjects** across various disciplines like **Physics, Mathematics, Computer Science**, etc.
+   - Drill down by selecting a **topic** within the subject (e.g., selecting *Physics* leads to *Kinematics*).
+   
+### 2. **Curated Video Content**
+   - **Smart Search**: Edutube finds and lists high-quality YouTube videos relevant to the selected topic.
+   - **Concept Extraction**: Each video is analyzed to highlight important concepts based on the transcript, providing a quick overview of the main ideas covered in the video.
 
-### `npm test`
+### 3. **Interactive Learning Experience**
+   - **Interactive Playground**: While watching a video, a playground panel to the right displays the **key concepts** and **timestamps** for quick navigation.
+   - **Concept Animations and UI**: For each highlighted concept, Edutube generates interactive visualizations and animations that allow users to engage with the material, reinforcing understanding and retention.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How It Works
 
-### `npm run build`
+1. **Select a Subject**: Start by picking a subject you're interested in, like Physics or Mathematics.
+2. **Choose a Topic**: Next, select a topic within the subject, like Kinematics for Physics.
+3. **Watch and Learn**: Edutube finds relevant videos and generates a list. Select a video to watch directly on the platform.
+4. **Engage with Concepts**: The interactive playground to the right of the video breaks down the video content into important concepts, complete with animations, examples, and interactive exercises.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### <a href="https://github.com/sarfarajansari/edutube.FastAPI">Edutube.API</a> is the fastapi backend for this project
+## Technologies Used
 
-### `npm run eject`
+- **Frontend**: React, SASS, JavaScript
+- **Backend**: FastAPI, python
+- **YouTube API**: For video search and metadata retrieval
+- **NLP and Transcript Analysis**: Transformers, pytorch
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Edutube** is more than just a video platform; it’s a next-generation interactive educational experience!
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
